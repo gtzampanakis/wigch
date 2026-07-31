@@ -5,12 +5,12 @@ import "testing"
 func TestSplitString(t *testing.T) {
     var result []string
 
-    result = SplitString("")
+    result = splitString("")
     if len(result) != 0 {
         t.Fail()
     }
 
-    result = SplitString("a")
+    result = splitString("a")
     if len(result) != 1 {
         t.Fail()
     }
@@ -18,7 +18,7 @@ func TestSplitString(t *testing.T) {
         t.Fail()
     }
 
-    result = SplitString("ab")
+    result = splitString("ab")
     if len(result) != 1 {
         t.Fail()
     }
@@ -26,7 +26,7 @@ func TestSplitString(t *testing.T) {
         t.Fail()
     }
 
-    result = SplitString("   a b")
+    result = splitString("   a b")
     if len(result) != 2 {
         t.Fail()
     }
@@ -37,7 +37,7 @@ func TestSplitString(t *testing.T) {
         t.Fail()
     }
 
-    result = SplitString("a  bc  d e  f ghi ")
+    result = splitString("a  bc  d e  f ghi ")
     if len(result) != 6 {
         t.Fail()
     }

@@ -4,11 +4,11 @@ import "fmt"
 
 /* Types */
 
-type Square int64
+type square int64
 
-type Piece int
+type piece int
 
-type Placement struct {
+type placement struct {
     occupiedBits int64
 
     whiteBits    int64
@@ -22,14 +22,23 @@ type Placement struct {
     kingBits     int64
 }
 
-type GameState struct {
-    placement Placement
+type color int
+
+type castlingAvailability int
+
+type gameState struct {
+    placement placement
+    activeColor color
+    castlingAvailability castlingAvailability
+    enPassantSquare square
+    halfmoveClock int
+    fullmoveNumber int
 }
 
-type Move struct {
-    fromSquare Square
-    toSquare Square
-    promotionTo Piece
+type move struct {
+    fromSquare square
+    toSquare square
+    promotionTo piece
 }
 
 /* ~~~~~ */
@@ -45,11 +54,20 @@ const (
     PIECE_KING   = 1 << iota
 )
 
-/* ~~~~~~~~~ */
+const (
+    COLOR_WHITE = 0
+    COLOR_BLACK = 1
+)
 
-func nextGameState(gameState *GameState, move *Move) *GameState {
-    return nil
-}
+const (
+    CASTLING_WHITE_KING_SIDE =  1 << iota
+    CASTLING_WHITE_QUEEN_SIDE = 1 << iota
+    CASTLING_BLACK_KING_SIDE =  1 << iota
+    CASTLING_BLACK_QUEEN_SIDE = 1 << iota
+)
+    
+
+/* ~~~~~~~~~ */
 
 func main() {
     fmt.Println("Done")
