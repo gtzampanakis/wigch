@@ -1,3 +1,8 @@
 #!/bin/sh
 
-find . -name '*.go' | entr ./run.bash
+while true; do
+    find . -name '*.go' | entr -d ./run.bash
+    if [ "$?" = 2 ]; then
+        continue
+    fi
+done

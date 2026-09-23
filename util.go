@@ -1,74 +1,70 @@
 package main
 
 import (
-    "fmt"
     "errors"
+    "fmt"
+    "unicode"
 )
 
 func decodeInteger(numberString string) (int, error) {
-    var result int = 0
-    var err error
-    var sign int = 1
-    var foundNumber = false
-    var setErr = func() {
-        err = errors.New(fmt.Sprintf(
-            "Invalid numberString: %s", numberString))
-    }
-    for ri, r := range(numberString) {
-        if (r == '-') {
-            if (ri == 0) {
-                sign = -1
-            } else {
-                setErr()
-            }
-        }
-        switch r {
-            case '0':
-                foundNumber = true
-                result *= (sign * 0)
-                sign *= 10
-            case '1':
-                foundNumber = true
-                result *= (sign * 1)
-                sign *= 10
-            case '2':
-                foundNumber = true
-                result *= (sign * 2)
-                sign *= 10
-            case '3':
-                foundNumber = true
-                result *= (sign * 3)
-                sign *= 10
-            case '4':
-                foundNumber = true
-                result *= (sign * 4)
-                sign *= 10
-            case '5':
-                foundNumber = true
-                result *= (sign * 5)
-                sign *= 10
-            case '6':
-                foundNumber = true
-                result *= (sign * 6)
-                sign *= 10
-            case '7':
-                foundNumber = true
-                result *= (sign * 7)
-                sign *= 10
-            case '8':
-                foundNumber = true
-                result *= (sign * 8)
-                sign *= 10
-            case '9':
-                foundNumber = true
-                result *= (sign * 9)
-                sign *= 10
-            default:
-                setErr()
+    var sign = 1
+    var acc = 0
+    var err error = nil
+    var wasSignParsed = false
+    var emptyInput = true
+    var shouldSetErr = false
+
+    for _, r := range(numberString) {
+        emptyInput = false
+        if unicode.IsSpace(r) {
+            continue
+        } else if !wasSignParsed && r == '-' {
+            sign = -1
+            wasSignParsed = true
+        } else if r == '0' {
+            acc *= 10; acc += 0;
+        } else if r == '1' {
+            acc *= 10; acc += 1;
+        } else if r == '2' {
+            acc *= 10; acc += 2;
+        } else if r == '3' {
+            acc *= 10; acc += 3;
+        } else if r == '4' {
+            acc *= 10; acc += 4;
+        } else if r == '5' {
+            acc *= 10; acc += 5;
+        } else if r == '6' {
+            acc *= 10; acc += 6;
+        } else if r == '7' {
+            acc *= 10; acc += 7;
+        } else if r == '8' {
+            acc *= 10; acc += 8;
+        } else if r == '9' {
+            acc *= 10; acc += 9;
+        } else {
+            shouldSetErr = true
+            break
         }
     }
-    if (!foundNumber) {
-        setErr()
+    if (emptyInput) { shouldSetErr = true; }
+
+    if (shouldSetErr) {
+        err = errors.New(fmt.Sprintf("Unable to parse integer from string: \"%s\"", numberString))
     }
-    return result, err
+
+    acc *= sign
+    return acc, err
+}
+
+func isWhitespace(r rune) bool {
+    if r == ' ' {
+        return true
+    }
+    if r == '\n' {
+        return true
+    }
+    if r == '\r' {
+        return true
+    }
+    return false
 }
