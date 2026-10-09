@@ -6,4 +6,4 @@ echo
 echo
 echo
 echo
-go test -v
+go test

@@ -6,7 +6,7 @@ import (
     "unicode"
 )
 
-func decodeInteger(numberString string) (int, error) {
+func utilDecodeInteger(numberString string) (int, error) {
     var sign = 1
     var acc = 0
     var err error = nil
@@ -56,7 +56,7 @@ func decodeInteger(numberString string) (int, error) {
     return acc, err
 }
 
-func isWhitespace(r rune) bool {
+func utilIsWhitespace(r rune) bool {
     if r == ' ' {
         return true
     }
