@@ -65,16 +65,16 @@ func fenByteToInt(b byte) (matched bool, result int) {
     return
 }
 
-/* parseRankFromFen parses one rank from the passed fen. Starts parsing
- * from fenOffset and continues until encountering endByte. Writes the
- * rank into the passed rank.  Returns number of bytes consumed or an
- * error. */
-func parseRankFromFen(fen string, fenOffset int, endByte byte, rank *Rank) (bytesConsumed int, err error) {
+/* initRankFromFen initializes the rank by parsing one rank from the passed
+ * fen. Starts parsing from fenOffset and continues until encountering endByte.
+ * Returns number of bytes consumed or an error. */
+func (rank *Rank) initRankFromFen(fen string, fenOffset int, endByte byte) (bytesConsumed int, err error) {
     if fenOffset < 0 {
         err = fmt.Errorf("fenOffset must be nonnegative")
         return
     }
     var byteI = fenOffset
+    /* fileI is the index of the file being parsed. */
     var fileI = 0
     var foundEndByte = false
     for ; byteI < len(fen); byteI++ {
