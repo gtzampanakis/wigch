@@ -18,4 +18,16 @@ func TestActiveColorParsing(t *testing.T) {
     if err != nil { t.Fail() }
     if bytesConsumed != 2 { t.Fail() }
     if color != Black { t.Fail() }
+
+    bytesConsumed, err = color.initColorFromFen("x ", 0)
+    if err == nil { t.Fail() }
+
+    bytesConsumed, err = color.initColorFromFen("w", 0)
+    if err == nil { t.Fail() }
+
+    bytesConsumed, err = color.initColorFromFen("", 0)
+    if err == nil { t.Fail() }
+
+    bytesConsumed, err = color.initColorFromFen("ww", 0)
+    if err == nil { t.Fail() }
 }
